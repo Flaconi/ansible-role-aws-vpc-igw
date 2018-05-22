@@ -1,0 +1,6 @@
+---
+
+- name: set expanded key-val tags
+  set_fact:
+    _fact_key_val_dict: "{ {% for tag in key_val_dict %} {{ '\"' + tag.key + '\"' + ':' + '\"' + tag.val + '\"' }},{% endfor %} }"
+  when: key_val_dict

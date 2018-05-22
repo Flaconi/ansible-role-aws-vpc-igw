@@ -1,0 +1,10 @@
+---
+
+###
+### Main entrypoint
+###
+- include_tasks: create_vpc_igw.yml
+  vars:
+    igw: "{{ item }}"
+  with_items:
+    - "{{ aws_vpc_igws }}"
