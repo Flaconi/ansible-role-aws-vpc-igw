@@ -15,13 +15,6 @@
 - include_tasks: gather_facts_vpc.yml
 
 
-# Returns:
-# * _fact_key_val_dict
-- include_tasks: _expand_key_val_dict.yml
-  vars:
-    key_val_dict: "{{ igw.tags | default() }}"
-
-
 - name: ensure vpc is created
   ec2_vpc_igw:
     # Fixed values
@@ -29,7 +22,7 @@
     # Looked-up values
     vpc_id: "{{ aws_vpc_igw_vpc_id }}"
     # Optional values
-    tags: "{{ _fact_key_val_dict | default(omit) }}"
+    tags: "{{ igw.tags | default({}) | get_attr('key', 'val') }}"
     region: "{{ igw.region | default(aws_vpc_igw_default_region | default(omit)) }}"
     aws_access_key: "{{ lookup('ENV', 'AWS_ACCESS_KEY') | default(omit) }}"
     aws_secret_key: "{{ lookup('ENV', 'AWS_SECRET_KEY') | default(omit) }}"

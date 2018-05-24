@@ -1,12 +1,5 @@
 ---
 
-# Convert variable key/val vpc_filter array into dict object
-# Returns:
-# * _fact_key_val_dict
-- include_tasks: _expand_key_val_dict.yml
-  vars:
-    key_val_dict: "{{ igw.vpc_filter | default() }}"
-
 - name: gather vpc facts
   ec2_vpc_net_facts:
     aws_access_key: "{{ lookup('ENV', 'AWS_ACCESS_KEY') | default(omit) }}"
@@ -14,7 +7,7 @@
     security_token: "{{ lookup('ENV', 'AWS_SECURITY_TOKEN') | default(omit) }}"
     profile: "{{ aws_vpc_igw_profile | default(omit) }}"
     region: "{{ igw.region | default(aws_vpc_igw_default_region) }}"
-    filters: "{{ _fact_key_val_dict }}"
+    filters: "{{ igw.vpc_filter | default({}) | get_attr('key', 'val') }}"
   register: _vpc_igw_vpc
 
 - name: fail if vpc was not found
