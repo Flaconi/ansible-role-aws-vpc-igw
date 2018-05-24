@@ -1,0 +1,9 @@
+---
+
+###
+### Sane defaults
+###
+
+aws_vpc_igw_default_region: eu-central-1
+
+aws_vpc_igws: []

@@ -1,0 +1,30 @@
+---
+
+#
+# Assert that required vpc_filter element is present
+- name: ensure vpc_igw array is defined correctly
+  assert:
+    that:
+      - igw.vpc_filter is defined
+    msg: "aws_vpc_igws[x].vpc_filter not defined, but required to lookup vpc"
+
+
+# Returns:
+# * aws_vpc_igw_vpc_id
+# * aws_vpc_igw_vpc_cidr
+- include_tasks: gather_facts_vpc.yml
+
+
+- name: ensure vpc is created
+  ec2_vpc_igw:
+    # Fixed values
+    state: present
+    # Looked-up values
+    vpc_id: "{{ aws_vpc_igw_vpc_id }}"
+    # Optional values
+    tags: "{{ igw.tags | default({}) | get_attr('key', 'val') }}"
+    region: "{{ igw.region | default(aws_vpc_igw_default_region | default(omit)) }}"
+    aws_access_key: "{{ lookup('ENV', 'AWS_ACCESS_KEY') | default(omit) }}"
+    aws_secret_key: "{{ lookup('ENV', 'AWS_SECRET_KEY') | default(omit) }}"
+    security_token: "{{ lookup('ENV', 'AWS_SECURITY_TOKEN') | default(omit) }}"
+    profile: "{{ aws_vpc_igw_profile | default(omit) }}"
