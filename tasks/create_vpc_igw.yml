@@ -6,6 +6,7 @@
   assert:
     that:
       - igw.vpc_filter is defined or igw.vpc_name is defined
+      - not (igw.vpc_filter is defined and igw.vpc_name is defined)
     msg: "aws_vpc_igws[x].vpc_filter or .vpc_name is not defined, but required to lookup vpc"
 
 
