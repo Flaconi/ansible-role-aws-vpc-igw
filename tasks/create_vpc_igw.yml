@@ -5,14 +5,23 @@
 - name: ensure vpc_igw array is defined correctly
   assert:
     that:
-      - igw.vpc_filter is defined
-    msg: "aws_vpc_igws[x].vpc_filter not defined, but required to lookup vpc"
+      - igw.vpc_filter is defined or igw.vpc_name is defined
+    msg: "aws_vpc_igws[x].vpc_filter or .vpc_name is not defined, but required to lookup vpc"
 
 
 # Returns:
 # * aws_vpc_igw_vpc_id
 # * aws_vpc_igw_vpc_cidr
-- include_tasks: gather_facts_vpc.yml
+- include_tasks: gather_facts_vpc_by_filter.yml
+  when:
+    - igw.vpc_filter is defined
+
+# Returns:
+# * aws_vpc_igw_vpc_id
+# * aws_vpc_igw_vpc_cidr
+- include_tasks: gather_facts_vpc_by_name.yml
+  when:
+    - igw.vpc_name is defined
 
 
 - name: ensure vpc is created
