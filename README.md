@@ -3,6 +3,8 @@
 This role is able to create any number of Internet Gateways, each attached to a VPC in AWS.
 
 [![Build Status](https://travis-ci.org/Flaconi/ansible-role-aws-vpc-igw.svg?branch=master)](https://travis-ci.org/Flaconi/ansible-role-aws-vpc-igw)
+[![Version](https://img.shields.io/github/tag/Flaconi/ansible-role-aws-vpc-igw.svg)](https://github.com/Flaconi/ansible-role-aws-vpc-igw/tags)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/d/25920.svg)](https://galaxy.ansible.com/Flaconi/aws-vpc-igw/)
 
 ## Requirements
 
