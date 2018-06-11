@@ -24,8 +24,7 @@
   when:
     - igw.vpc_name is defined
 
-
-- name: ensure vpc is created
+- name: ensure igw is created
   ec2_vpc_igw:
     # Fixed values
     state: present
