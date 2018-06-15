@@ -32,6 +32,17 @@
   when:
     - igw.vpc_name is defined
 
+
+- name: set igw tags
+  set_fact:
+    _aws_vpc_igw_tags: |
+      {{
+        igw.tags | default([]) + [{
+          'key': 'Name',
+          'val': igw.name
+        }]
+      }}
+
 - name: ensure igw is created
   ec2_vpc_igw:
     # Fixed values
@@ -39,7 +50,7 @@
     # Looked-up values
     vpc_id: "{{ aws_vpc_igw_vpc_id }}"
     # Optional values
-    tags: "{{ igw.tags | default({}) + [{'key': 'Name', 'val': igw.name}] | get_attr('key', 'val') }}"
+    tags: "{{ _aws_vpc_igw_tags | get_attr('key', 'val') }}"
     region: "{{ igw.region | default(aws_vpc_igw_default_region | default(omit)) }}"
     aws_access_key: "{{ lookup('ENV', 'AWS_ACCESS_KEY') | default(omit) }}"
     aws_secret_key: "{{ lookup('ENV', 'AWS_SECRET_KEY') | default(omit) }}"
