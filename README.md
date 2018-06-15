@@ -50,7 +50,7 @@ aws_vpc_igws:
 # (not pending nor deleted)
 aws_vpc_igw_vpc_filter_additional:
   - key: state
-    val: created
+    val: available
 
 aws_vpc_igws:
   # Create IGW for a VPC by VPC name
