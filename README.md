@@ -31,9 +31,11 @@ IGW's can be created per VPC either by supplying a VPC `name` or a VPC `filter`.
 ```yml
 aws_vpc_igws:
   # Create IGW for a VPC by VPC name
-  - vpc_name: devops-test-vpc
+  - name: my-igw-1
+    vpc_name: devops-test-vpc
   # Create IGW for a VPC by VPC filter
-  - vpc_filter:
+  - name: my-igw-2
+    vpc_filter:
       - key: "tag:Name"
         val: "devops-test-vpc"
       - key: "tag:env"
@@ -52,17 +54,17 @@ aws_vpc_igw_vpc_filter_additional:
 
 aws_vpc_igws:
   # Create IGW for a VPC by VPC name
-  - vpc_name: devops-test-vpc
+  - name: my-igw-1
+    vpc_name: devops-test-vpc
     region: eu-central-1
     tags:
-      - key: Name
-        val: devops-test-igw
       - key: env
         val: playground
       - key: department
         val: devops
   # Create IGW for a VPC by VPC filter
-  - vpc_filter:
+  - name: my-igw-2
+    vpc_filter:
       - key: "tag:Name"
         val: "devops-test-vpc"
       - key: "tag:env"
@@ -71,8 +73,6 @@ aws_vpc_igws:
         val: devops
     region: eu-central-1
     tags:
-      - key: Name
-        val: devops-test-igw
       - key: env
         val: playground
       - key: department
