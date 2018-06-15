@@ -2,7 +2,7 @@
 
 - name: combine vpc filter
   set_fact:
-    _vpc_igw_vpc_by_filter: |
+    _aws_vpc_igw_vpc_filter: |
       {{
         aws_vpc_igw_vpc_filter_additional + igw.vpc_filter
       }}
@@ -15,7 +15,7 @@
     security_token: "{{ lookup('ENV', 'AWS_SECURITY_TOKEN') | default(omit) }}"
     profile: "{{ aws_vpc_igw_profile | default(omit) }}"
     region: "{{ igw.region | default(aws_vpc_igw_default_region) }}"
-    filters: "{{ _vpc_igw_vpc_by_filter | get_attr('key', 'val') }}"
+    filters: "{{ _aws_vpc_igw_vpc_filter | get_attr('key', 'val') }}"
   register: _vpc_igw_vpc
 
 - name: fail if vpc was not found
