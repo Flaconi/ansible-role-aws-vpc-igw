@@ -6,4 +6,6 @@
 
 aws_vpc_igw_default_region: eu-central-1
 
+aws_vpc_igw_vpc_filter_additional: []
+
 aws_vpc_igws: []

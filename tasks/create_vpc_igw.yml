@@ -2,7 +2,15 @@
 
 #
 # Assert that required vpc_filter element is present
-- name: ensure vpc_igw array is defined correctly
+- name: ensure vpc_igw array contains name key
+  assert:
+    that:
+      - igw.name is defined
+      - igw.name | length > 0
+    msg: "aws_vpc_igws[x].name is not defined, but required"
+
+
+- name: ensure vpc_igw array contains vpc_name xor vpc_filter key
   assert:
     that:
       - igw.vpc_filter is defined or igw.vpc_name is defined
@@ -31,7 +39,7 @@
     # Looked-up values
     vpc_id: "{{ aws_vpc_igw_vpc_id }}"
     # Optional values
-    tags: "{{ igw.tags | default({}) | get_attr('key', 'val') }}"
+    tags: "{{ igw.tags | default({}) + [{'key': 'Name', 'val': igw.name}] | get_attr('key', 'val') }}"
     region: "{{ igw.region | default(aws_vpc_igw_default_region | default(omit)) }}"
     aws_access_key: "{{ lookup('ENV', 'AWS_ACCESS_KEY') | default(omit) }}"
     aws_secret_key: "{{ lookup('ENV', 'AWS_SECRET_KEY') | default(omit) }}"
