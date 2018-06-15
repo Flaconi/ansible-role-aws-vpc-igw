@@ -1,7 +1,6 @@
 ---
 
-#
-# Assert that required vpc_filter element is present
+# Assert that required name element is present
 - name: ensure vpc_igw array contains name key
   assert:
     that:
@@ -9,7 +8,7 @@
       - igw.name | length > 0
     msg: "aws_vpc_igws[x].name is not defined, but required"
 
-
+# Assert that required vpc_filter element is present
 - name: ensure vpc_igw array contains vpc_name xor vpc_filter key
   assert:
     that:
